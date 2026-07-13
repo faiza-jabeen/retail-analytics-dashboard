@@ -6,8 +6,7 @@ Raw transactions in. Business decisions out.
 
 ![Dashboard](outputs/dashboard_preview.png)
 
-**[→ Open the live dashboard](outputs/dashboard.html)**
-
+**[→ Open the live dashboard](https://faiza-jabeen.github.io/retail-analytics-dashboard/outputs/dashboard.html)**
 ---
 
 ## The question this answers
