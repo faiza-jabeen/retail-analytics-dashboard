@@ -1,6 +1,6 @@
 # Retail Analytics Dashboard
 
-An interactive sales and customer-performance dashboard built from two years of e-commerce transaction data — 26,657 orders, 1,800 customers, PKR 197M in revenue.
+An interactive sales and customer-performance dashboard built from two years of e-commerce transaction data: 26,657 orders, 1,800 customers, PKR 197M in revenue.
 
 Raw transactions in. Business decisions out.
 
@@ -14,9 +14,15 @@ Raw transactions in. Business decisions out.
 
 ## The question this answers
 
-Most sales dashboards report *what happened*. The harder and more useful question is *what should we do about it* — and that requires looking past headline revenue at the things that quietly decide whether a business grows or leaks.
+Most sales dashboards report *what happened*. The harder and more useful question is *what should we do about it*, and that requires looking past headline revenue at the things that quietly decide whether a business grows or leaks.
 
 Three findings came out of the analysis that would change how this business spends its money:
+
+## The question this answers
+
+Most sales dashboards report *what happened*. The harder and more useful question is *what should we do about it*, and that requires looking past headline revenue at the things that quietly decide whether a business grows or leaks.
+
+Three findings came out of the analysis that would change how this business spends its money.
 
 ### 1. The most valuable customers are the ones walking out the door
 
@@ -37,24 +43,24 @@ The implication is uncomfortable for a marketing budget built around acquisition
 
 ### 2. Returns cost more than discounts
 
-PKR 13.8M lost to returns, against PKR 5.8M given away in discounts — and returns are worse than they look, because a returned order still incurs its cost of goods. Revenue goes to zero; the cost does not.
+PKR 13.8M lost to returns, against PKR 5.8M given away in discounts. Returns are worse than they look, because a returned order still incurs its cost of goods. Revenue goes to zero; the cost does not.
 
 The dashboard therefore reports **realised revenue** (returns zeroed out, costs retained) rather than booked revenue. The two differ by enough to change which categories look healthy.
 
 ### 3. Retention stabilises rather than decays
 
-Month-1 return rate is 39%, and by month 6 it is **43%** — it does not fall away. The customers who come back once tend to keep coming back. That makes the first repeat purchase the single highest-leverage moment in the customer lifecycle, and it is where retention effort belongs.
+Month-1 return rate is 39%, and by month 6 it is **43%**. It does not fall away. The customers who come back once tend to keep coming back. That makes the first repeat purchase the single highest-leverage moment in the customer lifecycle, and it is where retention effort belongs.
 
 ---
 
 ## What's in the dashboard
 
-- **KPI strip** — net revenue, gross profit and margin, AOV, return rate, customer count
-- **Revenue & profit trend** — monthly, with the Ramadan/Eid and winter wedding-season peaks visible
-- **Category mix** — revenue share *and* margin, because a high-revenue low-margin category is not the same as a healthy one
-- **Channel, city, product tables** — where the money actually comes from
-- **Cohort retention heatmap** — every signup cohort tracked across 12 months
-- **RFM segments** — customers grouped by behaviour, with revenue share per segment
+- **KPI strip**: net revenue, gross profit and margin, AOV, return rate, customer count
+- **Revenue & profit trend**: monthly, with the Ramadan/Eid and winter wedding-season peaks visible
+- **Category mix**: revenue share *and* margin, because a high-revenue low-margin category is not the same as a healthy one
+- **Channel, city, product tables**: where the money actually comes from
+- **Cohort retention heatmap**: every signup cohort tracked across 12 months
+- **RFM segments**: customers grouped by behaviour, with revenue share per segment
 
 Fully interactive: hover any chart for detail.
 
