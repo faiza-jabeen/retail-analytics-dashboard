@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Retail Analytics · Sales &amp; Customer Performance</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink:      #0B0E14;
+    --panel:    #141922;
+    --line:     #232B38;
+    --dim:      #6C7A8F;
+    --text:     #D8DEE9;
+    --bright:   #F2F5F9;
+    --signal:   #4ADE80;
+    --warn:     #FBBF24;
+    --alert:    #F87171;
+    --cool:     #60A5FA;
+    --violet:   #A78BFA;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--ink);
+    color: var(--text);
+    font-family: 'Archivo', system-ui, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    padding: 28px 22px 60px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 1240px; margin: 0 auto; }
+
+  /* ---------- masthead ---------- */
+  header {
+    display: flex; align-items: baseline; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px;
+    padding-bottom: 16px; margin-bottom: 24px;
+    border-bottom: 1px solid var(--line);
+  }
+  h1 {
+    font-size: 19px; font-weight: 700; letter-spacing: -0.01em;
+    color: var(--bright);
+  }
+  h1 span { color: var(--dim); font-weight: 400; }
+  .period {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: var(--dim);
+    letter-spacing: 0.06em; text-transform: uppercase;
+  }
+
+  /* ---------- KPI strip ---------- */
+  .kpis {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    margin-bottom: 26px;
+  }
+  .kpi { background: var(--panel); padding: 16px 18px; }
+  .kpi-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.09em; text-transform: uppercase;
+    color: var(--dim); margin-bottom: 8px;
+  }
+  .kpi-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 26px; font-weight: 700; color: var(--bright);
+    letter-spacing: -0.02em; line-height: 1.1;
+  }
+  .kpi-value .unit { font-size: 14px; color: var(--dim); font-weight: 400; }
+  .kpi-sub { font-size: 11px; color: var(--dim); margin-top: 5px; }
+  .pos { color: var(--signal); }
+  .neg { color: var(--alert); }
+
+  /* ---------- grid ---------- */
+  .grid { display: grid; gap: 18px; margin-bottom: 18px; }
+  .g-2 { grid-template-columns: 1.6fr 1fr; }
+  .g-3 { grid-template-columns: repeat(3, 1fr); }
+  @media (max-width: 900px) {
+    .g-2, .g-3 { grid-template-columns: 1fr; }
+  }
+
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    padding: 18px 20px 20px;
+  }
+  .card-head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    margin-bottom: 16px;
+  }
+  .card-title {
+    font-size: 13px; font-weight: 600; color: var(--bright);
+    letter-spacing: 0.01em;
+  }
+  .card-note {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; color: var(--dim); letter-spacing: 0.04em;
+  }
+  .chart { position: relative; height: 230px; }
+  .chart.tall { height: 280px; }
+
+  /* ---------- tables ---------- */
+  table { width: 100%; border-collapse: collapse; }
+  th {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.07em; text-transform: uppercase;
+    color: var(--dim); font-weight: 500;
+    text-align: right; padding: 0 0 9px;
+    border-bottom: 1px solid var(--line);
+  }
+  th:first-child { text-align: left; }
+  td {
+    padding: 9px 0; font-size: 13px;
+    border-bottom: 1px solid rgba(35,43,56,0.5);
+    text-align: right;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  td:first-child {
+    text-align: left; font-family: 'Archivo', sans-serif;
+    color: var(--bright);
+  }
+  tr:last-child td { border-bottom: none; }
+  .bar-cell { position: relative; }
+  .bar {
+    position: absolute; left: 0; top: 50%; transform: translateY(-50%);
+    height: 3px; background: var(--cool); opacity: 0.5;
+  }
+
+  /* ---------- cohort heatmap ---------- */
+  .cohort { overflow-x: auto; }
+  .cohort table { min-width: 620px; }
+  .cohort td, .cohort th {
+    text-align: center; padding: 5px 3px;
+    font-size: 11px; border: none;
+  }
+  .cohort td:first-child, .cohort th:first-child {
+    text-align: left; padding-right: 12px;
+    color: var(--dim); font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+  }
+  .cell {
+    display: block; padding: 6px 2px; border-radius: 2px;
+    color: var(--bright); font-family: 'JetBrains Mono', monospace;
+    font-weight: 500;
+  }
+
+  /* ---------- segments ---------- */
+  .seg {
+    display: flex; align-items: center; gap: 12px;
+    padding: 11px 0;
+    border-bottom: 1px solid rgba(35,43,56,0.5);
+  }
+  .seg:last-child { border-bottom: none; }
+  .seg-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .seg-name { flex: 1; font-size: 13px; color: var(--bright); }
+  .seg-track {
+    flex: 1.4; height: 5px; background: rgba(255,255,255,0.05);
+    border-radius: 3px; overflow: hidden;
+  }
+  .seg-fill { height: 100%; border-radius: 3px; }
+  .seg-pct {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; color: var(--text); width: 46px; text-align: right;
+  }
+
+  .callout {
+    margin-top: 14px; padding: 12px 14px;
+    background: rgba(248,113,113,0.07);
+    border-left: 2px solid var(--alert);
+    font-size: 12.5px; line-height: 1.55; color: var(--text);
+  }
+  .callout strong { color: var(--bright); font-weight: 600; }
+
+  footer {
+    margin-top: 34px; padding-top: 16px;
+    border-top: 1px solid var(--line);
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px;
+    font-size: 11.5px; color: var(--dim);
+  }
+  footer a { color: var(--cool); text-decoration: none; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <h1>Retail Analytics <span>/ sales &amp; customer performance</span></h1>
+    <div class="period">Jan 2023 &mdash; Dec 2024 &middot; 26,657 orders</div>
+  </header>
+
+  <!-- KPI STRIP -->
+  <div class="kpis">
+    <div class="kpi">
+      <div class="kpi-label">Net Revenue</div>
+      <div class="kpi-value">196.8M<span class="unit"> PKR</span></div>
+      <div class="kpi-sub">after returns &amp; discounts</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Gross Profit</div>
+      <div class="kpi-value">94.4M<span class="unit"> PKR</span></div>
+      <div class="kpi-sub pos">47.9% margin</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Avg Order Value</div>
+      <div class="kpi-value">7,383<span class="unit"> PKR</span></div>
+      <div class="kpi-sub">14.8 orders / customer</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Return Rate</div>
+      <div class="kpi-value">6.8<span class="unit">%</span></div>
+      <div class="kpi-sub neg">&minus;13.8M PKR lost</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Customers</div>
+      <div class="kpi-value">1,800</div>
+      <div class="kpi-sub">39% return in month 1</div>
+    </div>
+  </div>
+
+  <!-- TREND + CATEGORY -->
+  <div class="grid g-2">
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Revenue &amp; profit by month</div>
+        <div class="card-note">PKR millions</div>
+      </div>
+      <div class="chart tall"><canvas id="trend"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Category mix</div>
+        <div class="card-note">share of revenue</div>
+      </div>
+      <div class="chart tall"><canvas id="cat"></canvas></div>
+    </div>
+  </div>
+
+  <!-- CHANNEL + CITY + PRODUCTS -->
+  <div class="grid g-3">
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Channel</div>
+        <div class="card-note">AOV</div>
+      </div>
+      <table>
+        <thead><tr><th>Source</th><th>Revenue</th><th>AOV</th></tr></thead>
+        <tbody>
+        <tr>
+          <td>Mobile App</td>
+          <td>88.2M</td>
+          <td>7,355</td>
+        </tr><tr>
+          <td>Website</td>
+          <td>76.0M</td>
+          <td>7,257</td>
+        </tr><tr>
+          <td>Social Media</td>
+          <td>28.6M</td>
+          <td>7,313</td>
+        </tr><tr>
+          <td>Unknown</td>
+          <td>4.0M</td>
+          <td>4,417</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title">City</div>
+        <div class="card-note">top 5</div>
+      </div>
+      <table>
+        <thead><tr><th>Market</th><th>Revenue</th><th>Cust.</th></tr></thead>
+        <tbody>
+        <tr>
+          <td>Karachi</td>
+          <td>56.5M</td>
+          <td>529</td>
+        </tr><tr>
+          <td>Lahore</td>
+          <td>54.2M</td>
+          <td>495</td>
+        </tr><tr>
+          <td>Islamabad</td>
+          <td>28.3M</td>
+          <td>256</td>
+        </tr><tr>
+          <td>Rawalpindi</td>
+          <td>17.5M</td>
+          <td>155</td>
+        </tr><tr>
+          <td>Faisalabad</td>
+          <td>16.5M</td>
+          <td>149</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Top products</div>
+        <div class="card-note">by revenue</div>
+      </div>
+      <table>
+        <thead><tr><th>Item</th><th>Revenue</th><th>Units</th></tr></thead>
+        <tbody>
+        <tr>
+          <td>Ceramic Dinner Set</td>
+          <td>25.1M</td>
+          <td>4,230</td>
+        </tr><tr>
+          <td>Wireless Earbuds</td>
+          <td>23.1M</td>
+          <td>4,260</td>
+        </tr><tr>
+          <td>Bluetooth Speaker</td>
+          <td>20.0M</td>
+          <td>4,421</td>
+        </tr><tr>
+          <td>Lawn Suit (3pc)</td>
+          <td>17.6M</td>
+          <td>4,283</td>
+        </tr><tr>
+          <td>Makeup Kit</td>
+          <td>16.3M</td>
+          <td>4,152</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- COHORT + SEGMENTS -->
+  <div class="grid g-2">
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Cohort retention</div>
+        <div class="card-note">% of cohort ordering again</div>
+      </div>
+      <div class="cohort">
+        <table>
+          <thead>
+            <tr>
+              <th>Cohort</th>
+              <th>M0</th><th>M1</th><th>M2</th><th>M3</th><th>M4</th><th>M5</th><th>M6</th><th>M7</th><th>M8</th><th>M9</th><th>M10</th><th>M11</th>
+            </tr>
+          </thead>
+          <tbody id="cohort-body"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Customer segments</div>
+        <div class="card-note">RFM &middot; share of revenue</div>
+      </div>
+      <div id="segments"></div>
+      <div class="callout">
+        <strong>At Risk customers hold 21% of revenue</strong>
+        but haven't ordered recently. Winning back this group is worth more than
+        acquiring an equivalent number of new customers, who contribute only
+        7%.
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div>Built by Faiza Jabeen &middot; Python &middot; pandas &middot; Chart.js</div>
+    <div>Synthetic data modelled on Pakistani e-commerce patterns</div>
+  </footer>
+
+</div>
+
+<script>
+const DATA = {"monthly": [{"year_month": "2023-01", "revenue": 4935045.3, "profit": 2358145.3, "orders": 684, "aov": 7214.978508771929}, {"year_month": "2023-02", "revenue": 5072520.05, "profit": 2441520.05, "orders": 672, "aov": 7548.392931547619}, {"year_month": "2023-03", "revenue": 8042071.35, "profit": 3670971.35, "orders": 1111, "aov": 7238.58807380738}, {"year_month": "2023-04", "revenue": 8512745.55, "profit": 4047345.55, "orders": 1146, "aov": 7428.224738219896}, {"year_month": "2023-05", "revenue": 5832751.4, "profit": 2784851.4, "orders": 800, "aov": 7290.93925}, {"year_month": "2023-06", "revenue": 7945998.8, "profit": 3870498.8, "orders": 1076, "aov": 7384.757249070632}, {"year_month": "2023-07", "revenue": 5274692.4, "profit": 2562892.4, "orders": 740, "aov": 7127.962702702704}, {"year_month": "2023-08", "revenue": 4964359.75, "profit": 2399359.75, "orders": 687, "aov": 7226.142285298399}, {"year_month": "2023-09", "revenue": 6319375.15, "profit": 3033775.15, "orders": 865, "aov": 7305.636011560694}, {"year_month": "2023-10", "revenue": 7022605.15, "profit": 3438405.15, "orders": 970, "aov": 7239.79912371134}, {"year_month": "2023-11", "revenue": 9347046.45, "profit": 4356646.45, "orders": 1316, "aov": 7102.6188829787225}, {"year_month": "2023-12", "revenue": 10089611.5, "profit": 4870511.5, "orders": 1365, "aov": 7391.656776556777}, {"year_month": "2024-01", "revenue": 8155854.05, "profit": 3998854.05, "orders": 1050, "aov": 7767.480047619048}, {"year_month": "2024-02", "revenue": 7285229.7, "profit": 3488429.7, "orders": 984, "aov": 7403.688719512195}, {"year_month": "2024-03", "revenue": 11036528.95, "profit": 5138528.95, "orders": 1515, "aov": 7284.837590759075}, {"year_month": "2024-04", "revenue": 10525447.5, "profit": 4926447.5, "orders": 1475, "aov": 7135.896610169491}, {"year_month": "2024-05", "revenue": 8662835.25, "profit": 4286235.25, "orders": 1119, "aov": 7741.586461126006}, {"year_month": "2024-06", "revenue": 10874819.75, "profit": 5324519.75, "orders": 1461, "aov": 7443.408453114305}, {"year_month": "2024-07", "revenue": 6325811.6, "profit": 3053411.6, "orders": 875, "aov": 7229.498971428571}, {"year_month": "2024-08", "revenue": 7503367.85, "profit": 3642867.85, "orders": 969, "aov": 7743.413673890608}, {"year_month": "2024-09", "revenue": 8337582.35, "profit": 3905982.35, "orders": 1171, "aov": 7120.053245089666}, {"year_month": "2024-10", "revenue": 9126732.9, "profit": 4477332.9, "orders": 1192, "aov": 7656.655117449664}, {"year_month": "2024-11", "revenue": 12706054.45, "profit": 6029354.45, "orders": 1706, "aov": 7447.863100820633}, {"year_month": "2024-12", "revenue": 12899159.3, "profit": 6247859.3, "orders": 1708, "aov": 7552.20099531616}], "category": [{"category": "Electronics", "revenue": 58214087.5, "profit": 27446787.5, "units": 13012, "margin_pct": 47.1480163628778}, {"category": "Apparel", "revenue": 42282318.1, "profit": 20316718.1, "units": 12635, "margin_pct": 48.05015196174876}, {"category": "Home", "revenue": 40173117.95, "profit": 18952417.95, "units": 12771, "margin_pct": 47.176865817555985}, {"category": "Beauty", "revenue": 35388890.75, "profit": 17240290.75, "units": 12692, "margin_pct": 48.71667459653281}, {"category": "Footwear", "revenue": 20739832.2, "profit": 10398532.2, "units": 8591, "margin_pct": 50.137976526155306}], "retention": {"cohorts": ["2023-01", "2023-02", "2023-03", "2023-04", "2023-05", "2023-06", "2023-07"], "cohort_sizes": [565, 383, 413, 203, 79, 72, 27], "matrix": [[100.0, 31.0, 44.1, 47.6, 38.2, 43.4, 35.0, 32.9, 39.6, 43.2, 52.7, 56.3], [100.0, 43.3, 50.1, 35.2, 43.3, 32.1, 29.8, 42.3, 43.6, 54.0, 56.9, 38.1], [100.0, 46.2, 35.8, 47.0, 32.0, 33.4, 40.0, 42.4, 49.4, 53.8, 45.5, 39.7], [100.0, 32.5, 42.4, 29.6, 34.5, 33.5, 41.4, 56.2, 54.2, 49.3, 41.9, 51.2], [100.0, 48.1, 35.4, 41.8, 30.4, 38.0, 55.7, 55.7, 46.8, 36.7, 53.2, 53.2], [100.0, 43.1, 26.4, 44.4, 34.7, 45.8, 52.8, 50.0, 43.1, 63.9, 61.1, 47.2], [100.0, 29.6, 25.9, 40.7, 44.4, 40.7, 48.1, 48.1, 66.7, 51.9, 48.1, 51.9]], "avg_month1": 39.1, "avg_month3": 40.9, "avg_month6": 43.3}, "segments": [{"segment": "Champions", "customers": 392, "revenue": 56812529.75, "avg_orders": 18.64030612244898, "revenue_share_pct": 28.86841258008871, "customer_share_pct": 21.777777777777775}, {"segment": "At Risk", "customers": 341, "revenue": 41269371.65, "avg_orders": 16.44281524926686, "revenue_share_pct": 20.970396019255176, "customer_share_pct": 18.944444444444443}, {"segment": "Loyal", "customers": 345, "revenue": 33971189.6, "avg_orders": 14.43768115942029, "revenue_share_pct": 17.261937138245788, "customer_share_pct": 19.166666666666668}, {"segment": "Hibernating", "customers": 390, "revenue": 31125945.3, "avg_orders": 10.91025641025641, "revenue_share_pct": 15.816170038893103, "customer_share_pct": 21.666666666666668}, {"segment": "Cannot Lose", "customers": 159, "revenue": 20382535.15, "avg_orders": 17.30188679245283, "revenue_share_pct": 10.357071525024994, "customer_share_pct": 8.833333333333334}, {"segment": "New / Promising", "customers": 173, "revenue": 13236675.05, "avg_orders": 10.15028901734104, "revenue_share_pct": 6.726012698492209, "customer_share_pct": 9.61111111111111}]};
+
+const CSS = getComputedStyle(document.documentElement);
+const C = n => CSS.getPropertyValue(n).trim();
+
+Chart.defaults.color = C('--dim');
+Chart.defaults.borderColor = C('--line');
+Chart.defaults.font.family = "'JetBrains Mono', monospace";
+Chart.defaults.font.size = 10;
+
+/* ---- monthly trend ---- */
+new Chart(document.getElementById('trend'), {
+  type: 'bar',
+  data: {
+    labels: DATA.monthly.map(m => m.year_month.slice(2)),
+    datasets: [
+      {
+        label: 'Revenue',
+        data: DATA.monthly.map(m => m.revenue / 1e6),
+        backgroundColor: 'rgba(96,165,250,0.28)',
+        borderColor: C('--cool'),
+        borderWidth: 1,
+        order: 2,
+      },
+      {
+        label: 'Profit',
+        data: DATA.monthly.map(m => m.profit / 1e6),
+        type: 'line',
+        borderColor: C('--signal'),
+        backgroundColor: 'transparent',
+        borderWidth: 2,
+        pointRadius: 0,
+        pointHoverRadius: 4,
+        tension: 0.3,
+        order: 1,
+      }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    interaction: { mode: 'index', intersect: false },
+    plugins: {
+      legend: {
+        position: 'top', align: 'end',
+        labels: { boxWidth: 8, boxHeight: 8, padding: 12, usePointStyle: true }
+      },
+      tooltip: {
+        backgroundColor: '#0B0E14',
+        borderColor: C('--line'), borderWidth: 1,
+        titleColor: C('--bright'), bodyColor: C('--text'),
+        padding: 10, displayColors: true, boxWidth: 8, boxHeight: 8,
+        callbacks: {
+          label: c => ` ${c.dataset.label}: ${c.parsed.y.toFixed(1)}M PKR`
+        }
+      }
+    },
+    scales: {
+      x: { grid: { display: false }, ticks: { maxRotation: 0, autoSkipPadding: 8 } },
+      y: {
+        grid: { color: 'rgba(35,43,56,0.6)' },
+        ticks: { callback: v => v + 'M' },
+        beginAtZero: true,
+      }
+    }
+  }
+});
+
+/* ---- category doughnut ---- */
+const catColors = [C('--cool'), C('--violet'), C('--signal'), C('--warn'), C('--alert')];
+new Chart(document.getElementById('cat'), {
+  type: 'doughnut',
+  data: {
+    labels: DATA.category.map(c => c.category),
+    datasets: [{
+      data: DATA.category.map(c => c.revenue),
+      backgroundColor: catColors,
+      borderColor: C('--panel'),
+      borderWidth: 2,
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    cutout: '58%',
+    plugins: {
+      legend: {
+        position: 'bottom',
+        labels: { boxWidth: 8, boxHeight: 8, padding: 10, usePointStyle: true, font: { size: 10 } }
+      },
+      tooltip: {
+        backgroundColor: '#0B0E14',
+        borderColor: C('--line'), borderWidth: 1,
+        titleColor: C('--bright'), bodyColor: C('--text'), padding: 10,
+        callbacks: {
+          label: c => {
+            const cat = DATA.category[c.dataIndex];
+            const pct = (cat.revenue / DATA.category.reduce((a,b)=>a+b.revenue,0) * 100).toFixed(1);
+            return [` ${(cat.revenue/1e6).toFixed(1)}M PKR (${pct}%)`,
+                    ` margin ${cat.margin_pct.toFixed(1)}%`];
+          }
+        }
+      }
+    }
+  }
+});
+
+/* ---- cohort heatmap ---- */
+const R = DATA.retention;
+const body = document.getElementById('cohort-body');
+R.matrix.forEach((row, i) => {
+  const tr = document.createElement('tr');
+  const label = document.createElement('td');
+  label.textContent = R.cohorts[i];
+  tr.appendChild(label);
+
+  for (let j = 0; j < 12; j++) {
+    const td = document.createElement('td');
+    const v = row[j];
+    if (v === undefined || v === null) {
+      td.innerHTML = '<span style="color:#2A3444">·</span>';
+    } else {
+      const span = document.createElement('span');
+      span.className = 'cell';
+      // opacity scales with retention; month 0 is always 100%
+      const alpha = j === 0 ? 0.85 : Math.min(0.8, 0.08 + (v / 100) * 1.3);
+      span.style.background = `rgba(74,222,128,${alpha})`;
+      span.style.color = alpha > 0.45 ? '#0B0E14' : '#D8DEE9';
+      span.textContent = v.toFixed(0);
+      td.appendChild(span);
+    }
+    tr.appendChild(td);
+  }
+  body.appendChild(tr);
+});
+
+/* ---- segments ---- */
+const segColors = {
+  'Champions':       C('--signal'),
+  'Loyal':           C('--cool'),
+  'At Risk':         C('--warn'),
+  'Cannot Lose':     C('--alert'),
+  'New / Promising': C('--violet'),
+  'Hibernating':     '#4A5768',
+};
+const segBox = document.getElementById('segments');
+const maxShare = Math.max(...DATA.segments.map(s => s.revenue_share_pct));
+
+DATA.segments.forEach(s => {
+  const row = document.createElement('div');
+  row.className = 'seg';
+  const col = segColors[s.segment] || C('--dim');
+  row.innerHTML = `
+    <span class="seg-dot" style="background:${col}"></span>
+    <span class="seg-name">${s.segment}</span>
+    <span class="seg-track">
+      <span class="seg-fill" style="width:${(s.revenue_share_pct/maxShare*100).toFixed(1)}%;background:${col}"></span>
+    </span>
+    <span class="seg-pct">${s.revenue_share_pct.toFixed(1)}%</span>
+  `;
+  segBox.appendChild(row);
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,536 @@
+{
+  "kpis": {
+    "total_revenue": 196798246.5,
+    "gross_profit": 94354746.5,
+    "margin_pct": 47.94491220225379,
+    "total_orders": 26657,
+    "unique_customers": 1800,
+    "avg_order_value": 7382.610440034512,
+    "orders_per_customer": 14.809444444444445,
+    "return_rate_pct": 6.771204561653599,
+    "revenue_lost_to_returns": 13788743.850000001,
+    "revenue_lost_to_discounts": 5754408.65
+  },
+  "monthly": [
+    {
+      "year_month": "2023-01",
+      "revenue": 4935045.3,
+      "profit": 2358145.3,
+      "orders": 684,
+      "aov": 7214.978508771929
+    },
+    {
+      "year_month": "2023-02",
+      "revenue": 5072520.05,
+      "profit": 2441520.05,
+      "orders": 672,
+      "aov": 7548.392931547619
+    },
+    {
+      "year_month": "2023-03",
+      "revenue": 8042071.35,
+      "profit": 3670971.35,
+      "orders": 1111,
+      "aov": 7238.58807380738
+    },
+    {
+      "year_month": "2023-04",
+      "revenue": 8512745.55,
+      "profit": 4047345.55,
+      "orders": 1146,
+      "aov": 7428.224738219896
+    },
+    {
+      "year_month": "2023-05",
+      "revenue": 5832751.4,
+      "profit": 2784851.4,
+      "orders": 800,
+      "aov": 7290.93925
+    },
+    {
+      "year_month": "2023-06",
+      "revenue": 7945998.8,
+      "profit": 3870498.8,
+      "orders": 1076,
+      "aov": 7384.757249070632
+    },
+    {
+      "year_month": "2023-07",
+      "revenue": 5274692.4,
+      "profit": 2562892.4,
+      "orders": 740,
+      "aov": 7127.962702702704
+    },
+    {
+      "year_month": "2023-08",
+      "revenue": 4964359.75,
+      "profit": 2399359.75,
+      "orders": 687,
+      "aov": 7226.142285298399
+    },
+    {
+      "year_month": "2023-09",
+      "revenue": 6319375.15,
+      "profit": 3033775.15,
+      "orders": 865,
+      "aov": 7305.636011560694
+    },
+    {
+      "year_month": "2023-10",
+      "revenue": 7022605.15,
+      "profit": 3438405.15,
+      "orders": 970,
+      "aov": 7239.79912371134
+    },
+    {
+      "year_month": "2023-11",
+      "revenue": 9347046.45,
+      "profit": 4356646.45,
+      "orders": 1316,
+      "aov": 7102.6188829787225
+    },
+    {
+      "year_month": "2023-12",
+      "revenue": 10089611.5,
+      "profit": 4870511.5,
+      "orders": 1365,
+      "aov": 7391.656776556777
+    },
+    {
+      "year_month": "2024-01",
+      "revenue": 8155854.05,
+      "profit": 3998854.05,
+      "orders": 1050,
+      "aov": 7767.480047619048
+    },
+    {
+      "year_month": "2024-02",
+      "revenue": 7285229.7,
+      "profit": 3488429.7,
+      "orders": 984,
+      "aov": 7403.688719512195
+    },
+    {
+      "year_month": "2024-03",
+      "revenue": 11036528.95,
+      "profit": 5138528.95,
+      "orders": 1515,
+      "aov": 7284.837590759075
+    },
+    {
+      "year_month": "2024-04",
+      "revenue": 10525447.5,
+      "profit": 4926447.5,
+      "orders": 1475,
+      "aov": 7135.896610169491
+    },
+    {
+      "year_month": "2024-05",
+      "revenue": 8662835.25,
+      "profit": 4286235.25,
+      "orders": 1119,
+      "aov": 7741.586461126006
+    },
+    {
+      "year_month": "2024-06",
+      "revenue": 10874819.75,
+      "profit": 5324519.75,
+      "orders": 1461,
+      "aov": 7443.408453114305
+    },
+    {
+      "year_month": "2024-07",
+      "revenue": 6325811.6,
+      "profit": 3053411.6,
+      "orders": 875,
+      "aov": 7229.498971428571
+    },
+    {
+      "year_month": "2024-08",
+      "revenue": 7503367.85,
+      "profit": 3642867.85,
+      "orders": 969,
+      "aov": 7743.413673890608
+    },
+    {
+      "year_month": "2024-09",
+      "revenue": 8337582.35,
+      "profit": 3905982.35,
+      "orders": 1171,
+      "aov": 7120.053245089666
+    },
+    {
+      "year_month": "2024-10",
+      "revenue": 9126732.9,
+      "profit": 4477332.9,
+      "orders": 1192,
+      "aov": 7656.655117449664
+    },
+    {
+      "year_month": "2024-11",
+      "revenue": 12706054.45,
+      "profit": 6029354.45,
+      "orders": 1706,
+      "aov": 7447.863100820633
+    },
+    {
+      "year_month": "2024-12",
+      "revenue": 12899159.3,
+      "profit": 6247859.3,
+      "orders": 1708,
+      "aov": 7552.20099531616
+    }
+  ],
+  "category": [
+    {
+      "category": "Electronics",
+      "revenue": 58214087.5,
+      "profit": 27446787.5,
+      "units": 13012,
+      "margin_pct": 47.1480163628778
+    },
+    {
+      "category": "Apparel",
+      "revenue": 42282318.1,
+      "profit": 20316718.1,
+      "units": 12635,
+      "margin_pct": 48.05015196174876
+    },
+    {
+      "category": "Home",
+      "revenue": 40173117.95,
+      "profit": 18952417.95,
+      "units": 12771,
+      "margin_pct": 47.176865817555985
+    },
+    {
+      "category": "Beauty",
+      "revenue": 35388890.75,
+      "profit": 17240290.75,
+      "units": 12692,
+      "margin_pct": 48.71667459653281
+    },
+    {
+      "category": "Footwear",
+      "revenue": 20739832.2,
+      "profit": 10398532.2,
+      "units": 8591,
+      "margin_pct": 50.137976526155306
+    }
+  ],
+  "city": [
+    {
+      "city": "Karachi",
+      "revenue": 56525891.45,
+      "orders": 7702,
+      "customers": 529
+    },
+    {
+      "city": "Lahore",
+      "revenue": 54243059.35,
+      "orders": 7332,
+      "customers": 495
+    },
+    {
+      "city": "Islamabad",
+      "revenue": 28307843.5,
+      "orders": 3812,
+      "customers": 256
+    },
+    {
+      "city": "Rawalpindi",
+      "revenue": 17460683.65,
+      "orders": 2355,
+      "customers": 155
+    },
+    {
+      "city": "Faisalabad",
+      "revenue": 16457321.1,
+      "orders": 2218,
+      "customers": 149
+    },
+    {
+      "city": "Multan",
+      "revenue": 15452064.05,
+      "orders": 2061,
+      "customers": 138
+    },
+    {
+      "city": "Peshawar",
+      "revenue": 8351383.4,
+      "orders": 1177,
+      "customers": 78
+    }
+  ],
+  "channel": [
+    {
+      "channel": "Mobile App",
+      "revenue": 88192850.6,
+      "orders": 11991,
+      "aov": 7354.920406971895
+    },
+    {
+      "channel": "Website",
+      "revenue": 76043334.6,
+      "orders": 10479,
+      "aov": 7256.735814486115
+    },
+    {
+      "channel": "Social Media",
+      "revenue": 28551171.1,
+      "orders": 3904,
+      "aov": 7313.312269467214
+    },
+    {
+      "channel": "Unknown",
+      "revenue": 4010890.2,
+      "orders": 908,
+      "aov": 4417.279955947137
+    }
+  ],
+  "top_products": [
+    {
+      "product": "Ceramic Dinner Set",
+      "category": "Home",
+      "revenue": 25058194.3,
+      "profit": 11522194.3,
+      "units": 4230
+    },
+    {
+      "product": "Wireless Earbuds",
+      "category": "Electronics",
+      "revenue": 23103948.7,
+      "profit": 11175948.7,
+      "units": 4260
+    },
+    {
+      "product": "Bluetooth Speaker",
+      "category": "Electronics",
+      "revenue": 19952508.7,
+      "profit": 9342108.7,
+      "units": 4421
+    },
+    {
+      "product": "Lawn Suit (3pc)",
+      "category": "Apparel",
+      "revenue": 17573318.95,
+      "profit": 8150718.95,
+      "units": 4283
+    },
+    {
+      "product": "Makeup Kit",
+      "category": "Beauty",
+      "revenue": 16274939.25,
+      "profit": 7555739.25,
+      "units": 4152
+    },
+    {
+      "product": "Embroidered Shawl",
+      "category": "Apparel",
+      "revenue": 15234790.35,
+      "profit": 7672990.35,
+      "units": 4201
+    },
+    {
+      "product": "Power Bank 20000mAh",
+      "category": "Electronics",
+      "revenue": 15157630.1,
+      "profit": 6928730.1,
+      "units": 4331
+    },
+    {
+      "product": "Leather Sandals",
+      "category": "Footwear",
+      "revenue": 13074266.9,
+      "profit": 6550766.9,
+      "units": 4349
+    },
+    {
+      "product": "Skincare Bundle",
+      "category": "Beauty",
+      "revenue": 11839452.2,
+      "profit": 5778852.2,
+      "units": 4329
+    },
+    {
+      "product": "Cotton Kurta",
+      "category": "Apparel",
+      "revenue": 9474208.8,
+      "profit": 4493008.8,
+      "units": 4151
+    }
+  ],
+  "retention": {
+    "cohorts": [
+      "2023-01",
+      "2023-02",
+      "2023-03",
+      "2023-04",
+      "2023-05",
+      "2023-06",
+      "2023-07"
+    ],
+    "cohort_sizes": [
+      565,
+      383,
+      413,
+      203,
+      79,
+      72,
+      27
+    ],
+    "matrix": [
+      [
+        100.0,
+        31.0,
+        44.1,
+        47.6,
+        38.2,
+        43.4,
+        35.0,
+        32.9,
+        39.6,
+        43.2,
+        52.7,
+        56.3
+      ],
+      [
+        100.0,
+        43.3,
+        50.1,
+        35.2,
+        43.3,
+        32.1,
+        29.8,
+        42.3,
+        43.6,
+        54.0,
+        56.9,
+        38.1
+      ],
+      [
+        100.0,
+        46.2,
+        35.8,
+        47.0,
+        32.0,
+        33.4,
+        40.0,
+        42.4,
+        49.4,
+        53.8,
+        45.5,
+        39.7
+      ],
+      [
+        100.0,
+        32.5,
+        42.4,
+        29.6,
+        34.5,
+        33.5,
+        41.4,
+        56.2,
+        54.2,
+        49.3,
+        41.9,
+        51.2
+      ],
+      [
+        100.0,
+        48.1,
+        35.4,
+        41.8,
+        30.4,
+        38.0,
+        55.7,
+        55.7,
+        46.8,
+        36.7,
+        53.2,
+        53.2
+      ],
+      [
+        100.0,
+        43.1,
+        26.4,
+        44.4,
+        34.7,
+        45.8,
+        52.8,
+        50.0,
+        43.1,
+        63.9,
+        61.1,
+        47.2
+      ],
+      [
+        100.0,
+        29.6,
+        25.9,
+        40.7,
+        44.4,
+        40.7,
+        48.1,
+        48.1,
+        66.7,
+        51.9,
+        48.1,
+        51.9
+      ]
+    ],
+    "avg_month1": 39.1,
+    "avg_month3": 40.9,
+    "avg_month6": 43.3
+  },
+  "segments": [
+    {
+      "segment": "Champions",
+      "customers": 392,
+      "revenue": 56812529.75,
+      "avg_orders": 18.64030612244898,
+      "revenue_share_pct": 28.86841258008871,
+      "customer_share_pct": 21.777777777777775
+    },
+    {
+      "segment": "At Risk",
+      "customers": 341,
+      "revenue": 41269371.65,
+      "avg_orders": 16.44281524926686,
+      "revenue_share_pct": 20.970396019255176,
+      "customer_share_pct": 18.944444444444443
+    },
+    {
+      "segment": "Loyal",
+      "customers": 345,
+      "revenue": 33971189.6,
+      "avg_orders": 14.43768115942029,
+      "revenue_share_pct": 17.261937138245788,
+      "customer_share_pct": 19.166666666666668
+    },
+    {
+      "segment": "Hibernating",
+      "customers": 390,
+      "revenue": 31125945.3,
+      "avg_orders": 10.91025641025641,
+      "revenue_share_pct": 15.816170038893103,
+      "customer_share_pct": 21.666666666666668
+    },
+    {
+      "segment": "Cannot Lose",
+      "customers": 159,
+      "revenue": 20382535.15,
+      "avg_orders": 17.30188679245283,
+      "revenue_share_pct": 10.357071525024994,
+      "customer_share_pct": 8.833333333333334
+    },
+    {
+      "segment": "New / Promising",
+      "customers": 173,
+      "revenue": 13236675.05,
+      "avg_orders": 10.15028901734104,
+      "revenue_share_pct": 6.726012698492209,
+      "customer_share_pct": 9.61111111111111
+    }
+  ]
+}
