@@ -4,9 +4,12 @@ An interactive sales and customer-performance dashboard built from two years of 
 
 Raw transactions in. Business decisions out.
 
+### **[→ Open the live dashboard](https://faiza-jabeen.github.io/retail-analytics-dashboard/outputs/dashboard.html)**
+
+*Fully interactive — hover any chart for detail.*
+
 ![Dashboard](outputs/dashboard_preview.png)
 
-**[→ Open the live dashboard](https://faiza-jabeen.github.io/retail-analytics-dashboard/outputs/dashboard.html)**
 ---
 
 ## The question this answers
